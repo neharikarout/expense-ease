@@ -80,7 +80,7 @@ await server.start();
 app.use(
 	"/graphql",
 	cors({
-		origin: "",
+		origin: "https://expense-ease-uvzp.onrender.com",
 		credentials: true,
 	}),
 	express.json(),
