@@ -7,7 +7,6 @@ import passport from "passport";
 import session from "express-session";
 import connectMongo from "connect-mongodb-session";
 
-
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
@@ -20,20 +19,15 @@ import mergedTypeDefs from "./typeDefs/index.js";
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
+import job from "./cron.js";
 
 dotenv.config();
 configurePassport();
 
+job.start();
+
 const __dirname = path.resolve();
 const app = express();
-
-
-app.use(
-	cors({
-	  origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
-	  credentials: true,
-	})
-  ); 
 
 const httpServer = http.createServer(app);
 
@@ -45,20 +39,6 @@ const store = new MongoDBStore({
 });
 
 store.on("error", (err) => console.log(err));
-
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader(
-	  "Access-Control-Allow-Methods",
-	  "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-	);
-	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-	if (req.method === "OPTIONS") {
-	  return res.sendStatus(200);
-	}
-	next();
-  });
-
 
 app.use(
 	session({
@@ -86,14 +66,11 @@ const server = new ApolloServer({
 await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
-// and our expressMiddleware function
-
-
-
+// and our expressMiddleware function.
 app.use(
 	"/graphql",
 	cors({
-		origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
+		origin: "http://localhost:3000",
 		credentials: true,
 	}),
 	express.json(),
