@@ -4,8 +4,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import passport from "passport";
+import cors from "cors";
 import session from "express-session";
 import connectMongo from "connect-mongodb-session";
+
 
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -26,6 +28,7 @@ configurePassport();
 
 const __dirname = path.resolve();
 const app = express();
+const allowedOrigins = ['https://expense-ease-uvzp.onrender.com', 'http://localhost:3000'];
 
 const httpServer = http.createServer(app);
 
@@ -37,6 +40,18 @@ const store = new MongoDBStore({
 });
 
 store.on("error", (err) => console.log(err));
+
+app.use(cors({
+	origin: function(origin, callback) {
+	  if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+		callback(null, true);
+	  } else {
+		callback(new Error('Not allowed by CORS'));
+	  }
+	},
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	credentials: true,
+  }));
 
 app.use(
 	session({
