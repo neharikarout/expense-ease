@@ -4,7 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import passport from "passport";
-import cors from "cors";
 import session from "express-session";
 import connectMongo from "connect-mongodb-session";
 
@@ -41,17 +40,6 @@ const store = new MongoDBStore({
 
 store.on("error", (err) => console.log(err));
 
-app.use(cors({
-	origin: function(origin, callback) {
-	  if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-		callback(null, true);
-	  } else {
-		callback(new Error('Not allowed by CORS'));
-	  }
-	},
-	methods: ['GET', 'POST', 'PUT', 'DELETE'],
-	credentials: true,
-  }));
 
 app.use(
 	session({
