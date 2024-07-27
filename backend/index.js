@@ -68,11 +68,18 @@ await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function
-var corsOptions = {
-	origin: "http://localhost:3000"
-  };
-  
-  app.use(cors(corsOptions));
+function buildResponse(statusCode, body) {
+    return {
+        statusCode: statusCode,
+        headers: {
+             "Access-Control-Allow-Headers" : "Content-Type",
+              "Access-Control-Allow-Origin": "*",
+            'Content-Type': 'application/json',
+             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
+        },
+        body: JSON.stringify(body),
+    };
+}
 app.use(
 	"/graphql",
 	cors({
