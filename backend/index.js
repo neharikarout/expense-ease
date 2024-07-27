@@ -20,7 +20,12 @@ import mergedTypeDefs from "./typeDefs/index.js";
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
-
+app.use(
+	cors({
+	  origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
+	  credentials: true,
+	})
+  ); 
 
 dotenv.config();
 configurePassport();
@@ -83,10 +88,11 @@ await server.start();
 // and our expressMiddleware function
 
 
+
 app.use(
 	"/graphql",
 	cors({
-		origin: "http://localhost:3000",
+		origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
 		credentials: true,
 	}),
 	express.json(),
