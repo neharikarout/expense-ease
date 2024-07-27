@@ -79,10 +79,10 @@ await server.start();
 // and our expressMiddleware function.
 app.use(
 	"/graphql",
-	// cors({
-	// 	origin: "https://expense-ease-uvzp.onrender.com",
-	// 	credentials: true,
-	// }),
+	cors({
+		origin: "https://expense-ease-uvzp.onrender.com",
+		credentials: true,
+	}),
 	express.json(),
 	// expressMiddleware accepts the same arguments:
 	// an Apollo Server instance and optional configuration options
