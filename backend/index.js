@@ -20,12 +20,6 @@ import mergedTypeDefs from "./typeDefs/index.js";
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
-app.use(
-	cors({
-	  origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
-	  credentials: true,
-	})
-  ); 
 
 dotenv.config();
 configurePassport();
@@ -33,6 +27,13 @@ configurePassport();
 const __dirname = path.resolve();
 const app = express();
 
+
+app.use(
+	cors({
+	  origin: ["https://expense-ease-uvzp.onrender.com", "http://localhost:3000"],
+	  credentials: true,
+	})
+  ); 
 
 const httpServer = http.createServer(app);
 
