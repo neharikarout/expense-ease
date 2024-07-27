@@ -68,18 +68,12 @@ await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function
-function buildResponse(statusCode, body) {
-    return {
-        statusCode: statusCode,
-        headers: {
-             "Access-Control-Allow-Headers" : "Content-Type",
-              "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
-        },
-        body: JSON.stringify(body),
-    };
-}
+
+app.use((req, res, next) => {
+	res.header({"Access-Control-Allow-Origin": "*"});
+	next();
+  }) 
+  
 app.use(
 	"/graphql",
 	cors({
