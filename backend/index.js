@@ -27,7 +27,7 @@ configurePassport();
 
 const __dirname = path.resolve();
 const app = express();
-const allowedOrigins = ['https://expense-ease-uvzp.onrender.com', 'http://localhost:3000'];
+
 
 const httpServer = http.createServer(app);
 
@@ -73,11 +73,11 @@ app.use((req, res, next) => {
 	res.header({"Access-Control-Allow-Origin": "*"});
 	next();
   }) 
-  
+
 app.use(
 	"/graphql",
 	cors({
-		origin: allowedOrigins,
+		origin: "*",
 		credentials: true,
 	}),
 	express.json(),
