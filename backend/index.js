@@ -67,7 +67,12 @@ const server = new ApolloServer({
 await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
-// and our expressMiddleware function.
+// and our expressMiddleware function
+var corsOptions = {
+	origin: "http://localhost:3000"
+  };
+  
+  app.use(cors(corsOptions));
 app.use(
 	"/graphql",
 	cors({
