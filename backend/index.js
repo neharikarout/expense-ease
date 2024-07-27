@@ -80,7 +80,7 @@ await server.start();
 app.use(
 	"/graphql",
 	cors({
-		origin: "https://expense-ease-uvzp.onrender.com",
+		origin: "",
 		credentials: true,
 	}),
 	express.json(),
@@ -102,4 +102,4 @@ app.get("*", (req, res) => {
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB();
 
-console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+console.log(`🚀  Server ready at  port ${httpServer.address().port}`);
