@@ -69,15 +69,11 @@ await server.start();
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function
 
-app.use((req, res, next) => {
-	res.header({"Access-Control-Allow-Origin": "*"});
-	next();
-  }) 
 
 app.use(
 	"/graphql",
 	cors({
-		origin: "*",
+		origin: "https://expense-ease-uvzp.onrender.com",
 		credentials: true,
 	}),
 	express.json(),
